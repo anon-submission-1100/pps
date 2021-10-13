@@ -1,0 +1,39 @@
+syntax = "proto3";
+package pps;
+
+service SignallingAPI {
+    rpc GetPK   (GetPKRequest)
+        returns (GetPKResponse);
+    rpc Setup   (SetupRequest)
+        returns (SetupResponse);
+    rpc Send    (SendRequest)
+        returns (SendResponse);
+    rpc Receive (ReceiveRequest)
+        returns (ReceiveResponse);
+}
+
+message GetPKRequest {}
+message GetPKResponse {
+    bytes public_key = 1;
+}
+
+message SetupRequest {
+    bytes encrypted_public_keys = 1;
+}
+message SetupResponse {
+    bytes public_key = 1;
+}
+
+message SendRequest {
+    bytes encrypted_signal = 1;
+}
+message SendResponse {}
+
+message ReceiveRequest {
+    bytes public_key = 1;
+    uint64 ctr = 2;
+    bytes signature = 3;
+}
+message ReceiveResponse {
+    repeated bytes encrypted_row = 1;
+}
